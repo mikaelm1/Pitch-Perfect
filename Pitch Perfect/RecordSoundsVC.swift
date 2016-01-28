@@ -63,7 +63,6 @@ class RecordSoundsVC: UIViewController, AVAudioRecorderDelegate {
         let recordingName = "my_audio.wav"
         let pathArray = [dirPath, recordingName]
         let filePath = NSURL.fileURLWithPathComponents(pathArray)
-        print(filePath)
         
         // Set up audio session
         let session = AVAudioSession.sharedInstance()
