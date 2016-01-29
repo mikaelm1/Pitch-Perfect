@@ -35,7 +35,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isx-es-UpY">
-                                <rect key="frame" x="275" y="500" width="50" height="50"/>
+                                <rect key="frame" x="225" y="500" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Q4q-14-9N1"/>
                                     <constraint firstAttribute="width" constant="50" id="jS5-yg-qbI"/>
@@ -45,20 +45,40 @@
                                     <action selector="stopButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N6h-aM-s79"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlw-03-aic">
+                                <rect key="frame" x="325" y="500" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Pc9-Xf-IOV"/>
+                                    <constraint firstAttribute="height" constant="50" id="T6j-sD-ToS"/>
+                                </constraints>
+                                <state key="normal" image="pause"/>
+                                <connections>
+                                    <action selector="pauseButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UZ9-46-GiJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Isx-es-UpY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-50" id="2dw-Yp-hLr"/>
                             <constraint firstItem="STB-yj-O8X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="705-f9-zLY"/>
                             <constraint firstItem="Isx-es-UpY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ac8-Cg-WTB"/>
+                            <constraint firstItem="dlw-03-aic" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="50" id="EtR-h9-k0a"/>
                             <constraint firstItem="STB-yj-O8X" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XbZ-4f-6qA"/>
                             <constraint firstItem="STB-yj-O8X" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gkz-vi-CKR"/>
                             <constraint firstItem="xhb-Xk-1WW" firstAttribute="top" secondItem="STB-yj-O8X" secondAttribute="bottom" constant="43" id="ifs-dP-ptn"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Isx-es-UpY" secondAttribute="bottom" constant="50" id="kh9-H4-ozB"/>
                             <constraint firstItem="xhb-Xk-1WW" firstAttribute="centerX" secondItem="STB-yj-O8X" secondAttribute="centerX" id="mqo-CZ-0hI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dlw-03-aic" secondAttribute="bottom" constant="50" id="wDW-nj-lOt"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Ac8-Cg-WTB"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Record" id="pSG-8P-1bG"/>
                     <connections>
+                        <outlet property="pauseButton" destination="dlw-03-aic" id="vOW-O6-jc1"/>
                         <outlet property="recordButton" destination="STB-yj-O8X" id="Ssb-vA-Umx"/>
                         <outlet property="recordingLabel" destination="xhb-Xk-1WW" id="Qvs-Mb-aub"/>
                         <outlet property="stopButton" destination="Isx-es-UpY" id="t3G-lI-rAU"/>
@@ -186,6 +206,7 @@
         <image name="darthvader" width="100" height="100"/>
         <image name="fast" width="100" height="100"/>
         <image name="microphone" width="100" height="100"/>
+        <image name="pause" width="200" height="200"/>
         <image name="slow" width="100" height="100"/>
         <image name="stop" width="50" height="50"/>
     </resources>

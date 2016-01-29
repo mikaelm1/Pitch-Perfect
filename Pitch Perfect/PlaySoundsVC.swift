@@ -29,9 +29,8 @@ class PlaySoundsVC: UIViewController {
     }
     
     func playAudioWithVaribalePitch(pitch: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAudioPlayer()
+        resetAudioEngine()
         
         let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
@@ -48,30 +47,39 @@ class PlaySoundsVC: UIViewController {
         
         audioPlayerNode.play()
     }
-
-
-    @IBAction func stopButtonPressed(sender: AnyObject) {
+    
+    func stopAudioPlayer() {
         audioPlayer.stop()
-        audioPlayer.currentTime = 0.0
+    }
+    
+    func resetAudioEngine() {
         audioEngine.stop()
         audioEngine.reset()
     }
     
-    @IBAction func fastVersionButtonPressed(sender: AnyObject) {
-        audioEngine.stop()
-        audioEngine.reset()
-        audioPlayer.stop()
-        audioPlayer.rate = 2.0
+    func playAudioAtRate(rate: Float) {
+        audioPlayer.rate = rate
         audioPlayer.play()
     }
 
 
+    @IBAction func stopButtonPressed(sender: AnyObject) {
+        stopAudioPlayer()
+        audioPlayer.currentTime = 0.0
+        resetAudioEngine()
+    }
+    
+    @IBAction func fastVersionButtonPressed(sender: AnyObject) {
+        resetAudioEngine()
+        stopAudioPlayer()
+        playAudioAtRate(2.0)
+    }
+
+
     @IBAction func slowVersionButtonPressed(sender: AnyObject) {
-        audioEngine.stop()
-        audioEngine.reset()
-        audioPlayer.stop()
-        audioPlayer.rate = 0.7
-        audioPlayer.play()
+        resetAudioEngine()
+        stopAudioPlayer()
+        playAudioAtRate(0.7)
     }
     
     @IBAction func playChpmunkSound(sender: AnyObject) {

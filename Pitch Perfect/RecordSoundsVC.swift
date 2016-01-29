@@ -14,9 +14,12 @@ class RecordSoundsVC: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var recordingLabel: UILabel!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var pauseButton: UIButton!
     
     var audioRecorder: AVAudioRecorder!
     var recordedAudio: RecordedAudio!
+    var recordingPaused = false
+    var finishedRecording = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +28,7 @@ class RecordSoundsVC: UIViewController, AVAudioRecorderDelegate {
     
     override func viewWillAppear(animated: Bool) {
         stopButton.hidden = true
+        pauseButton.hidden = true
         recordButton.enabled = true
         recordingLabel.text = "Tap To Record"
     }
@@ -40,14 +44,29 @@ class RecordSoundsVC: UIViewController, AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
         
-        if flag {
+        if flag && finishedRecording {
             recordedAudio = RecordedAudio(filePath: recorder.url, title: recorder.url.lastPathComponent!)
             performSegueWithIdentifier("stopRecording", sender: recordedAudio)
+        } else if recordingPaused {
+            recordedAudio = RecordedAudio(filePath: recorder.url, title: recorder.url.lastPathComponent!)
         } else {
-            print("Recording was not succesful")
+            showAlert()
             recordButton.enabled = true
             stopButton.hidden = true
         }
+        
+    }
+    
+    func showAlert() {
+        let controller = UIAlertController()
+        controller.title = "Recording was not successful."
+        controller.message = "Your audio was not recorded. Please try again."
+        
+        let okAction = UIAlertAction(title: "ok", style: UIAlertActionStyle.Default) { (action) -> Void in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        controller.addAction(okAction)
+        self.presentViewController(controller, animated: true, completion: nil)
         
     }
 
@@ -55,6 +74,7 @@ class RecordSoundsVC: UIViewController, AVAudioRecorderDelegate {
     @IBAction func recordButtonPressed(sender: UIButton) {
         recordingLabel.text = "Recording..."
         stopButton.hidden = false
+        pauseButton.hidden = false 
         recordButton.enabled = false
         
         // Get the user's directory path
@@ -77,14 +97,29 @@ class RecordSoundsVC: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.record()
         
     }
+    
+    @IBAction func pauseButtonPressed(sender: UIButton) {
+        if recordingPaused {
+            recordingLabel.text = "Recording..."
+            audioRecorder.record()
+            recordingPaused = false
+            pauseButton.setImage(UIImage(named: "pause"), forState: .Normal)
+        } else {
+            recordingLabel.text = "Tap to Resume"
+            audioRecorder.pause()
+            recordingPaused = true
+            pauseButton.setImage(UIImage(named: "resume"), forState: .Normal)
+        }
+    }
 
     @IBAction func stopButtonPressed(sender: AnyObject) {
         recordingLabel.text = "Tap To Record"
-        
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
+        finishedRecording = true 
     }
+    
 }
 
 
